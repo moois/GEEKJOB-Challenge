@@ -1,0 +1,38 @@
+物：をクラスとします。
+
+抽象化１で定義した通りまずは考えます。
+形式はフリップから引用
+
+public class Mono｛
+	public String name = "";
+	public String madeby = "";
+	public date madeon ="";
+	public void set物(String n, String mb,date mo)｛...｝
+	public void showName(){...}
+	public void showMadeBy(){...}
+	public void showMadeOn(){...}	
+｝
+
+Mono pc =　new Mono();
+pc.setMono("パソコン","ASUS",2017/1/1);
+
+pc.showName():
+pc.showMadeBy();
+pc.showMadeOn();
+
+public class Pc extends Mono{
+	public void running(){...}
+	public void turnon(){...}
+	public void turnoff(){...}
+}
+
+public class Pen extends Mono{
+	public void used(){...}
+}
+
+Pc pc = new Pc();
+pc.setMono("パソコン","ASUS",2017/1/1);
+Pen sarasa = new Pen();
+sarasa.setMono("ペン","サラサ",1999/7/7);
+
+pc.runnning(); 
