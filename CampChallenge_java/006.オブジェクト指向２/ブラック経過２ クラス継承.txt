@@ -1,0 +1,105 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package forBlack;
+
+import java.util.ArrayList; //アレーリストをインポート。
+import java.util.Random; //ランダムにカードを選ぶため、乱数クラスをインポート。
+
+/**
+ *
+ * @author mooni
+ */
+//ヒューマンから継承
+public class Dealer extends Human  {
+    
+    
+    //cardsからランダムでカードを選ぶための乱数インスタンス。
+    Random rnd = new Random();
+    int ran = rnd.nextInt(53);
+    
+    //アレーリストの変数cardsを用意。10種52枚の値を埋め込む。
+    ArrayList<Integer> cards = new ArrayList<Integer>();
+    //入力。数が多いのでしまう。
+    
+    public Dealer(){
+        for(int i =1; i<14; i++){
+            cards.add(i);
+            cards.add(i);
+            cards.add(i);
+            cards.add(i);
+            
+        }
+    }
+    
+    @Override
+    public int open(){
+    
+        return 1;
+    }
+    
+    @Override
+    public void setCard(ArrayList<Integer> cards){
+    
+    }
+    
+    @Override
+    public boolean checkSum(){
+    
+        return true;
+    }
+   
+    //dealメソッドを用意。ゲーム開始時の二枚返却処理だと思われる。
+    public void deal(){
+    }
+    //hitメソッドを用意。hit時のカードの一枚返却を行うメソッド。
+    public void hit(){
+    }
+}
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package forBlack;
+
+import java.util.ArrayList; //アレーリストをインポート。
+        
+
+/**
+ *
+ * @author mooni
+ */
+
+//Humanから継承。
+public class User extends Human{
+    //必要な処理のインスタンス、メソッドを入力。
+    
+    
+    @Override
+    public int open(){
+    
+        return 1;
+    }
+    
+    @Override
+    public void setCard(ArrayList<Integer> cards){
+    
+    }
+    
+    @Override
+    public boolean checkSum(){
+    
+        return true;
+    }
+    
+    public void hit(){
+    }
+    
+    public void srand(){
+    }
+
+}
