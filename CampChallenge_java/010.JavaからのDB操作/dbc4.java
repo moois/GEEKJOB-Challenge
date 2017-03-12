@@ -56,11 +56,23 @@ public class dbc4 extends HttpServlet {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/challenge_db","root","");
                 //SQL文の入力。処理を行わせる。
                 st = con.prepareStatement("SELECT * FROM user WHERE userID = 1");
-                //実行する
-                st.executeUpdate();
+                
+                data = st.executeQuery();
+                
+                while(data.next()){
+                out.println(data.getString("name"));
+                out.println("<br>");
+                out.println(data.getString("tell"));
+                out.println("<br>");
+                out.println(data.getString("age"));
+                out.println("<br>");
+                out.println(data.getString("birthday"));
+                out.println("<br>");
+            }
                 
                 st.close();
                 con.close();
+                data.close();
                 out.println("成功した");
                 
             } catch (SQLException e_sql){
@@ -72,6 +84,7 @@ public class dbc4 extends HttpServlet {
                     try{
                     con.close();
                     st.close();
+                    data.close();
                     } catch (Exception e_con) {
                         System.out.println(e_con.getMessage());
                     }

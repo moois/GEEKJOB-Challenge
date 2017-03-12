@@ -7,8 +7,13 @@ package dbc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author mooni
  */
-public class dbc3 extends HttpServlet {
+@WebServlet(name = "dbc6", urlPatterns = {"/dbc6"})
+public class dbc6 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,12 +37,13 @@ public class dbc3 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-            //以下の課題を、JavaからのJDBCを用いて実現してください。
-            //前回の課題「テーブルの作成とinsert」で作成したテーブルからSELECT*により全件取得し、画面に取得した全情報を表示してください。
+            /*
+            以下の課題を、JavaからのJDBCを用いて実現してください。
+            課題「テーブルへ情報を格納」でINSERTしたレコードを指定して削除してください。SELECT*で結果を表示してください
+            */
             
             //接続、切断を確立するクラスを呼び出し
             Connection con = null;
@@ -44,42 +51,46 @@ public class dbc3 extends HttpServlet {
             PreparedStatement st = null;
             //検索した結果をJava上で受け取るためのクラスを呼び出し
             ResultSet data = null;
-            
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
        
-            //コネクションにアドレスをつける。マスターユーザーにてパスなしログインと同等
+                //コネクションにアドレスをつける。マスターユーザーにてパスなしログインと同等
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/challenge_db","root","");
-
-            //SQL文の入力。処理を行わせる。
-            st = con.prepareStatement("select * from user");
-            
-            //
-            data = st.executeQuery();
-            
-            while(data.next()){
-                out.println(data.getString("name"));
-                out.println("<br>");
-                out.println(data.getString("tell"));
-                out.println("<br>");
-                out.println(data.getString("age"));
-                out.println("<br>");
-                out.println(data.getString("birthday"));
-            }
-            
-            st.close();
-            con.close();
-            out.println("成功した");
-            data.close();
+                //SQL文の入力。処理を行わせる。
+                st = con.prepareStatement("delete from user where userID = 6");
+                
+                st.executeUpdate();
+                
+                st = con.prepareStatement("select * from user");
+                
+                data = st.executeQuery();
+                
+                while(data.next()){
+                    out.println(data.getString("name"));
+                    out.println("<br>");
+                    out.println(data.getString("tell"));
+                    out.println("<br>");
+                    out.println(data.getString("age"));
+                    out.println("<br>");
+                    out.println(data.getString("birthday"));
+                    out.println("<br>");
+                }
+                
+                st.close();
+                con.close();
+                data.close();
+                out.println("成功した");
+                
             } catch (SQLException e_sql){
-                out.println("接続時に何らかのエラーが発生しました1"+e_sql.toString());
+                out.println("接続時に何らかのエラーが発生しました"+e_sql.toString());
             } catch (Exception e){
-                out.println("接続時に何らかのエラーが発生しました2"+e.toString());
+                out.println("接続時に何らかのエラーが発生しました"+e.toString());
             } finally {
                 if(con != null || st != null){
                     try{
                     con.close();
                     st.close();
+                    data.close();
                     } catch (Exception e_con) {
                         System.out.println(e_con.getMessage());
                     }
@@ -89,10 +100,10 @@ public class dbc3 extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet dbc3</title>");            
+            out.println("<title>Servlet dbc6</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet dbc3 at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet dbc6 at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
